@@ -36,21 +36,28 @@ function setPattern(){
 
 //let i = 0;
 function showPattern() {
+
+  document.body.classList.add('disable_clicking');
+  console.log('disable_clicking');
   let i = 0;
+  let delay = 0;
   let moves = setInterval(function(){
     fillColor(game.currentGame[i]);
     i++;
-    if(i >= game.currentGame.length){
+    delay = 3000;
+    if(i > game.currentGame.length){
       clearInterval(moves);
+      document.body.classList.remove('disable_clicking');
+      console.log('disable_clicking off ' + i);
     }
   }, 1000);
+
 };
 
 function addToPlayer(colorSel) {
-  // for (let a=0;a<game.currentGame.length;a++) {
     fillColor(colorSel);
     game.player.push(colorSel)
-  // }
+
   if(game.player.length >= game.currentGame.length){
       checkRound();
   }
@@ -77,14 +84,25 @@ function fillColor(theColor){
 };
 
 function checkRound() {
+  let roundStatus = document.getElementById('round_status');
+
+  overlay.classList.remove('hidden');
+  startBtn.classList.add('hidden');
+  roundStatus.classList.remove('hidden');
+
   for(let b=0;b<game.currentGame.length;b++){
-    //console.log(b);
-    //console.log(game.player,length);
     if((game.currentGame[b] != game.player[b]) || (game.currentGame.length != game.player.length)){
       console.log('game over');
       break
     }
     else if(b + 1 === game.player.length){
+
+      setTimeout(function(){
+        overlay.classList.add('hidden');
+        startBtn.classList.remove('hidden');
+        roundStatus.classList.add('hidden');
+      }, 1000);
+
       console.log('win');
       game.round++;
       game.player = [];

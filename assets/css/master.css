@@ -1,12 +1,18 @@
 :root{
   --main-bg-color: #272727;
+  --overlay-color: #202020;
+  --main-font-color: #F6F6F6;
 }
 
 body{
   background-color: var(--main-bg-color);
+  color: var(--main-font-color);
+  font-family: arial;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  overflow: hidden;
+  font-size: 1em;
 }
 
 .color-choice{
@@ -71,13 +77,13 @@ body{
 
 #overlay{
   position: absolute;
-  background-color: green;
+  background-color: var(--overlay-color);
   width: 100vw;
   height: 100vh;
   top: 0;
   left: 0;
   z-index: 10;
-  opacity: 0.8;
+  opacity: 0.9;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -85,12 +91,12 @@ body{
 }
 
 input[type=button]{
-  background-color: orange;
+  background-color: var(--overlay-color);
   width: 50vw;
   height: 20vh;
   outline: none;
-  border: none;
-  font-size: 5vh;
+  border: 2px solid white;
+  font-size: 5rem;
   font-family: arial;
   color: #fff;
   box-shadow: 0 3px 3px #000;
@@ -98,4 +104,20 @@ input[type=button]{
 
 .hidden{
   visibility: hidden;
+  display: none;
 }
+
+.disable_clicking{
+  background-color: purple;
+  pointer-events: none;
+}
+
+/*@keyframes acrossScreenAnim {
+  from{transform: translateX(1000px);}
+  to{transform: translateX(-1000px);}
+}
+
+.show_across{
+  animation-name: acrossScreenAnim;
+  animation-duration: 5s;
+}*/
