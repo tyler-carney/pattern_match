@@ -1,7 +1,15 @@
 :root{
-  --main-bg-color: #272727;
-  --overlay-color: #202020;
+  --main-bg-color: rgba(48, 48, 48, 1);
+  --overlay-color: rgba(32, 32, 32, 0.9);
   --main-font-color: #F6F6F6;
+  --orange: rgba(252, 164, 88, 1);
+  --red: rgba(252, 88, 88, 1);
+  --blue: rgba(65, 114, 164, 1);
+  --green: rgba(62, 178, 116, 1);
+}
+
+html{
+  font-size: 2vw;
 }
 
 body{
@@ -12,16 +20,20 @@ body{
   margin: 0;
   box-sizing: border-box;
   overflow: hidden;
-  font-size: 1em;
 }
 
 .color-choice{
   /*position: relative;*/
   box-shadow: 0px 0px 10px #000;
+  border-radius: 20px;
   /*width: 50vw;*/
   /*height: auto;*/
   /*padding-top: 100%;*/
   /*border-radius: 30px;*/
+}
+
+.color-choice:hover{
+  cursor: pointer;
 }
 
 #game-board{
@@ -41,38 +53,38 @@ body{
 
 #orange{
   /*background-color: orange;*/
-  border: 15px solid orange;
+  border: 15px solid var(--orange);
 }
 
 #red{
   /*background-color: red;*/
-  border: 15px solid red;
+  border: 15px solid var(--red);
 }
 
 #green{
   /*background-color: green;*/
-  border: 15px solid green;
+  border: 15px solid var(--green);
 }
 
 #blue{
   /*background-color: blue;*/
-  border: 15px solid blue;
+  border: 15px solid var(--blue);
 }
 
 .orangeFill{
-  background-color: orange !important;
+  background-color: var(--orange) !important;
 }
 
 .redFill{
-  background-color: red !important;
+  background-color: var(--red) !important;
 }
 
 .blueFill{
-  background-color: blue !important;
+  background-color: var(--blue) !important;
 }
 
 .greenFill{
-  background-color: green !important;
+  background-color: var(--green) !important;
 }
 
 #overlay{
@@ -83,7 +95,7 @@ body{
   top: 0;
   left: 0;
   z-index: 10;
-  opacity: 0.9;
+  /*opacity: 0.9;*/
   display: flex;
   justify-content: center;
   align-items: center;
@@ -91,15 +103,22 @@ body{
 }
 
 input[type=button]{
-  background-color: var(--overlay-color);
+  /*background-color: var(--overlay-color);*/
+  background-color: rgba(32, 32, 32, 1);
   width: 50vw;
   height: 20vh;
   outline: none;
   border: 2px solid white;
-  font-size: 5rem;
+  border-radius: 10px;
+  font-size: 3rem;
   font-family: arial;
   color: #fff;
-  box-shadow: 0 3px 3px #000;
+  /*opacity: 1;*/
+  /*box-shadow: 0 3px 3px #000;*/
+}
+
+#round_status{
+  font-size: 3rem;
 }
 
 .hidden{
@@ -120,4 +139,10 @@ input[type=button]{
 .show_across{
   animation-name: acrossScreenAnim;
   animation-duration: 5s;
+}*/
+
+/*@media (max-width: 700px) {
+  html{
+    font-size: 2vw;
+  }
 }*/
