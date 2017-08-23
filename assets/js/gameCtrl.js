@@ -21,6 +21,9 @@ startBtn.addEventListener('click', startGame);
 function startGame() {
   console.log('starting game');
   overlay.classList.add('hidden');
+  game.round = 0;
+  game.currentGame = [];
+  game.player = [];
   setPattern();
 };
 
@@ -36,21 +39,28 @@ function setPattern(){
 
 //let i = 0;
 function showPattern() {
+
+  document.body.classList.add('disable_clicking');
+  console.log('disable_clicking');
   let i = 0;
+  let delay = 0;
   let moves = setInterval(function(){
     fillColor(game.currentGame[i]);
     i++;
-    if(i >= game.currentGame.length){
+    delay = 3000;
+    if(i > game.currentGame.length){
       clearInterval(moves);
+      document.body.classList.remove('disable_clicking');
+      console.log('disable_clicking off ' + i);
     }
   }, 1000);
+
 };
 
 function addToPlayer(colorSel) {
-  // for (let a=0;a<game.currentGame.length;a++) {
     fillColor(colorSel);
-    game.player.push(colorSel)
-  // }
+    game.player.push(colorSel);
+
   if(game.player.length >= game.currentGame.length){
       checkRound();
   }
@@ -59,12 +69,18 @@ function addToPlayer(colorSel) {
 function fillColor(theColor){
   console.log("filling color");
     if(theColor === '#orange'){
+      const audio_one = document.getElementById('audio_one');
+      audio_one.play();
         orangePad.classList.add('orangeFill');
-        setTimeout(function(){orangePad.classList.remove('orangeFill')}, 500);
+        setTimeout(function(){orangePad.classList.remove('orangeFill')}, 1000);
+        // orangePad.style.backgroundColor = 'orange';
+        // setTimeout(function(){orangePad.style.backgroundColor = 'black';}, 500);
     }
     else if (theColor === '#red') {
+      const audio_two = document.getElementById('audio_two');
+      audio_two.play();
       redPad.classList.add('redFill');
-      setTimeout(function(){redPad.classList.remove('redFill')}, 500);
+      setTimeout(function(){redPad.classList.remove('redFill')}, 1000);
     }
     else if (theColor === '#blue') {
       bluePad.classList.add('blueFill');
@@ -77,14 +93,30 @@ function fillColor(theColor){
 };
 
 function checkRound() {
+  let roundStatus = document.getElementById('round_status');
+
+  overlay.classList.remove('hidden');
+  startBtn.classList.add('hidden');
+  roundStatus.classList.remove('hidden');
+
   for(let b=0;b<game.currentGame.length;b++){
-    //console.log(b);
-    //console.log(game.player,length);
     if((game.currentGame[b] != game.player[b]) || (game.currentGame.length != game.player.length)){
+      startBtn.classList.remove('hidden');
+      roundStatus.classList.add('hidden');
+      startBtn.value = "Try again";
       console.log('game over');
       break
     }
     else if(b + 1 === game.player.length){
+
+      roundStatus.textContent = "Round " + game.round + " cleared";
+
+      setTimeout(function(){
+        overlay.classList.add('hidden');
+        startBtn.classList.remove('hidden');
+        roundStatus.classList.add('hidden');
+      }, 1000);
+
       console.log('win');
       game.round++;
       game.player = [];
