@@ -70,23 +70,35 @@ function fillColor(theColor){
   console.log("filling color");
     if(theColor === '#orange'){
       const audio_one = document.getElementById('audio_one');
+      audio_one.load();
+      audio_one.volume = 0.2;
       audio_one.play();
         orangePad.classList.add('orangeFill');
-        setTimeout(function(){orangePad.classList.remove('orangeFill')}, 1000);
+        setTimeout(function(){orangePad.classList.remove('orangeFill')}, 500);
         // orangePad.style.backgroundColor = 'orange';
         // setTimeout(function(){orangePad.style.backgroundColor = 'black';}, 500);
     }
     else if (theColor === '#red') {
       const audio_two = document.getElementById('audio_two');
+      audio_two.load();
+      audio_two.volume = 0.2;
       audio_two.play();
       redPad.classList.add('redFill');
-      setTimeout(function(){redPad.classList.remove('redFill')}, 1000);
+      setTimeout(function(){redPad.classList.remove('redFill')}, 500);
     }
     else if (theColor === '#blue') {
+      const audio_three = document.getElementById('audio_three');
+      audio_three.load();
+      audio_three.volume = 0.2;
+      audio_three.play();
       bluePad.classList.add('blueFill');
       setTimeout(function(){bluePad.classList.remove('blueFill')}, 500);
     }
     else if (theColor === '#green') {
+      const audio_four = document.getElementById('audio_four');
+      audio_four.load();
+      audio_four.volume = 0.2;
+      audio_four.play();
       greenPad.classList.add('greenFill');
       setTimeout(function(){greenPad.classList.remove('greenFill')}, 500);
     }
