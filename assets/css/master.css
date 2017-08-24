@@ -127,7 +127,7 @@ input[type=button]{
 }
 
 .disable_clicking{
-  background-color: purple;
+  /*background-color: purple;*/
   pointer-events: none;
 }
 
