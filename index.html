@@ -5,10 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="assets/css/master.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script type="text/javascript" src="assets/js/gameCtrl.js" async></script>
 
     <title>Simon Game</title>
   </head>
   <body>
+    <header>
+      <!-- <input type="button" id="volume-btn" class="item" name="volumeBtn" /> -->
+      <button type="button" id="volume-btn" name="button">
+        <span id="vol_icon" class="icon"></span>
+      </button>
+      <h2 id="round_title" class="item"></h2>
+      <!-- <input type="button" id="volume-btn" class="item" name="volumeBtn" value="Audio"> -->
+    </header>
     <section id="game-board">
       <div id="orange" class="color-choice">
 
@@ -32,6 +43,6 @@
     <audio id="audio_two" src="assets/audio/sound_two.mp3"></audio>
     <audio id="audio_three" src="assets/audio/sound_three.mp3"></audio>
     <audio id="audio_four" src="assets/audio/sound_four.mp3"></audio>
+    <audio id="volume_ctrl" src="assets/audio/volume_ctrl.mp3"></audio>
   </body>
-  <script type="text/javascript" src="assets/js/gameCtrl.js"></script>
 </html>
