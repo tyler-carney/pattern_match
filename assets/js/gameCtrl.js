@@ -2,8 +2,15 @@ let game = {
   round: 0,
   possibilities: ['#orange', '#red', '#blue', '#green'],
   currentGame: [],
-  player: []
+  player: [],
+  volume: [{amt: 0.0, cl: 'icon-volume-mute'},
+    {amt: 0.25, cl: 'icon-volume-quarter'},
+    {amt: 0.50, cl: 'icon-volume-half'},
+    {amt: 0.75, cl: 'icon-volume-three-quarter'},
+    {amt: 1, cl: 'icon-volume-full'}]
 };
+
+let volumeIdx = 2;
 
 const orangePad = document.getElementById('orange');
 const redPad = document.getElementById('red');
@@ -11,12 +18,16 @@ const bluePad = document.getElementById('blue');
 const greenPad = document.getElementById('green');
 const startBtn = document.getElementById('start-btn');
 const overlay = document.getElementById('overlay');
+const audioBtn = document.getElementById('volume-btn');
+const volIcon = document.getElementById('vol_icon');
+const roundTitle = document.getElementById('round_title');
 
 orangePad.addEventListener('click', function(){addToPlayer('#orange');});
 redPad.addEventListener('click', function(){addToPlayer('#red');});
 bluePad.addEventListener('click', function(){addToPlayer('#blue');});
 greenPad.addEventListener('click', function(){addToPlayer('#green');});
 startBtn.addEventListener('click', startGame);
+audioBtn.addEventListener('click', function(){adjustVolume(volumeIdx);});
 
 function startGame() {
   console.log('starting game');
@@ -24,23 +35,42 @@ function startGame() {
   game.round = 0;
   game.currentGame = [];
   game.player = [];
+  volIcon.classList.add(game.volume[volumeIdx].cl);
+  roundTitle.textContent = "Round " + (game.round + 1);
   setPattern();
 };
+
+function adjustVolume(volume) {
+  const volume_feedback = document.getElementById('volume_ctrl');
+  if (volumeIdx + 1 < game.volume.length) {
+    volumeIdx = volumeIdx + 1;
+    volIcon.classList.remove(game.volume[volumeIdx - 1].cl);
+    volIcon.classList.add(game.volume[volumeIdx].cl);
+  }
+  else {
+    volumeIdx = 0;
+    volIcon.classList.remove(game.volume[4].cl);
+    volIcon.classList.add(game.volume[0].cl);
+  }
+
+  volume_feedback.load();
+  volume_feedback.volume = game.volume[volumeIdx].amt;
+  volume_feedback.play();
+}
 
 function setPattern(){
     console.log('set pattern ' + game.round);
     let idx = Math.floor(Math.random() * 4);
-    // console.log('idx: ' + idx);
-    // console.log(game.possibilities[idx]);
     game.currentGame.push(game.possibilities[idx]);
     console.log(game);
     showPattern();
 };
 
-//let i = 0;
 function showPattern() {
 
-  document.body.classList.add('disable_clicking');
+  const gameBoard = document.getElementById('game-board');
+
+  gameBoard.classList.add('disable_clicking');
   console.log('disable_clicking');
   let i = 0;
   let delay = 0;
@@ -50,7 +80,7 @@ function showPattern() {
     delay = 3000;
     if(i > game.currentGame.length){
       clearInterval(moves);
-      document.body.classList.remove('disable_clicking');
+      gameBoard.classList.remove('disable_clicking');
       console.log('disable_clicking off ' + i);
     }
   }, 1000);
@@ -67,11 +97,11 @@ function addToPlayer(colorSel) {
 };
 
 function fillColor(theColor){
-  console.log("filling color");
+
     if(theColor === '#orange'){
       const audio_one = document.getElementById('audio_one');
       audio_one.load();
-      audio_one.volume = 0.2;
+      audio_one.volume = game.volume[volumeIdx].amt;
       audio_one.play();
         orangePad.classList.add('orangeFill');
         setTimeout(function(){orangePad.classList.remove('orangeFill')}, 500);
@@ -81,7 +111,7 @@ function fillColor(theColor){
     else if (theColor === '#red') {
       const audio_two = document.getElementById('audio_two');
       audio_two.load();
-      audio_two.volume = 0.2;
+      audio_two.volume = game.volume[volumeIdx].amt;
       audio_two.play();
       redPad.classList.add('redFill');
       setTimeout(function(){redPad.classList.remove('redFill')}, 500);
@@ -89,7 +119,7 @@ function fillColor(theColor){
     else if (theColor === '#blue') {
       const audio_three = document.getElementById('audio_three');
       audio_three.load();
-      audio_three.volume = 0.2;
+      audio_three.volume = game.volume[volumeIdx].amt;
       audio_three.play();
       bluePad.classList.add('blueFill');
       setTimeout(function(){bluePad.classList.remove('blueFill')}, 500);
@@ -97,7 +127,7 @@ function fillColor(theColor){
     else if (theColor === '#green') {
       const audio_four = document.getElementById('audio_four');
       audio_four.load();
-      audio_four.volume = 0.2;
+      audio_four.volume = game.volume[volumeIdx].amt;
       audio_four.play();
       greenPad.classList.add('greenFill');
       setTimeout(function(){greenPad.classList.remove('greenFill')}, 500);
@@ -116,12 +146,12 @@ function checkRound() {
       startBtn.classList.remove('hidden');
       roundStatus.classList.add('hidden');
       startBtn.value = "Try again";
-      console.log('game over');
       break
     }
     else if(b + 1 === game.player.length){
 
-      roundStatus.textContent = "Round " + game.round + " cleared";
+      roundTitle.textContent = "Round " + (game.round + 2);
+      roundStatus.textContent = "Round " + (game.round + 1) + " cleared";
 
       setTimeout(function(){
         overlay.classList.add('hidden');
@@ -129,7 +159,6 @@ function checkRound() {
         roundStatus.classList.add('hidden');
       }, 1000);
 
-      console.log('win');
       game.round++;
       game.player = [];
       setPattern();
