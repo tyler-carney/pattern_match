@@ -3,6 +3,7 @@ let game = {
   possibilities: ['#orange', '#red', '#blue', '#green'],
   currentGame: [],
   player: [],
+  record: 0,
   volume: [{amt: 0.0, cl: 'icon-volume-mute'},
     {amt: 0.25, cl: 'icon-volume-quarter'},
     {amt: 0.50, cl: 'icon-volume-half'},
@@ -21,6 +22,7 @@ const overlay = document.getElementById('overlay');
 const audioBtn = document.getElementById('volume-btn');
 const volIcon = document.getElementById('vol_icon');
 const roundTitle = document.getElementById('round_title');
+const recordText = document.getElementById('record_score');
 
 orangePad.addEventListener('click', function(){addToPlayer('#orange');});
 redPad.addEventListener('click', function(){addToPlayer('#red');});
@@ -37,6 +39,7 @@ function startGame() {
   game.player = [];
   volIcon.classList.add(game.volume[volumeIdx].cl);
   roundTitle.textContent = "Round " + (game.round + 1);
+  recordText.textContent = game.record;
   setPattern();
 };
 
@@ -135,14 +138,29 @@ function fillColor(theColor){
 };
 
 function checkRound() {
-  let roundStatus = document.getElementById('round_status');
+  const roundStatus = document.getElementById('round_status');
+  const infoText = document.getElementById('info_text');
 
   overlay.classList.remove('hidden');
   startBtn.classList.add('hidden');
+  infoText.classList.add('hidden');
   roundStatus.classList.remove('hidden');
 
   for(let b=0;b<game.currentGame.length;b++){
     if((game.currentGame[b] != game.player[b]) || (game.currentGame.length != game.player.length)){
+      infoText.classList.remove('hidden');
+      //check if new record
+      if(game.round > game.record){
+        infoText.textContent = "You made it to round " + game.round +
+          ". Congratulations A new record!";
+        game.record = game.round;
+      }
+      else {
+        infoText.textContent = "You made it to round " + game.round +
+          ". Try again to reach a new record";
+        game.record = game.record;
+      }
+
       startBtn.classList.remove('hidden');
       roundStatus.classList.add('hidden');
       startBtn.value = "Try again";
